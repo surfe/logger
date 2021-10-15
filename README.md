@@ -20,6 +20,9 @@ if err != nil {
 
 Error with a message and extra fields;
 ```
+import l "github.com/Leadjet/logger"
+...
+
 fields := []interface{}{l.UserKey, x.UserWithCompany}
 l.Log.Errorw("Add Contact (SF)", err, fields...)
 ```
