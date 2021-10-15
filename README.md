@@ -32,7 +32,12 @@ fields := []interface{}{l.UserKey, x.UserWithCompany}
 l.Log.Errorw("Add Contact (SF)", err, fields...)
 ```
 
-Just an error;
+Or, simply add key-value pairs;
+```
+l.Log.Errorw("Add Contact (SF)", l.CompanyKey, x.CompanyKey, l.EmailKey, x.User.Email)
+```
+
+Only add an error (company key won't be sent thus will not be filtered by company!);
 ```
 l.Log.Error("Add Contact (SF)", err)
 ```
