@@ -1,3 +1,5 @@
+github.com/Leadjet/Logger v0.7.0 h1:81OvWUgW7RdXQ5o6wWEe8Y/Oa1s7dV01LB7uSStJ2iE=
+github.com/Leadjet/Logger v0.7.0/go.mod h1:EhMboGr8XzuMSDfmqQflqmcrqfHvERhVwgAgMPwBEsQ=
 github.com/benbjohnson/clock v1.1.0 h1:Q92kusRqC1XV2MjkWETPvjJVqKetz1OzxZB7mHJLju8=
 github.com/benbjohnson/clock v1.1.0/go.mod h1:J11/hYXuz8f4ySSvYwY0FKfm+ezbsZBKZxNJlLklBHA=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
