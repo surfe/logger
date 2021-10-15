@@ -1,9 +1,9 @@
 package zap
 
 import (
+	logger "github.com/Leadjet/Logger"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
-	"leadjet-server/internal/logger"
 )
 
 // RegisterLog initiates a new Zap logger instance and sets logger.Log
