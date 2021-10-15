@@ -5,14 +5,16 @@ var Log Logger
 
 // Basic fields
 const (
-	Email      string = "email"
-	CompanyKey string = "company_key"
-	Latency    string = "latency"
-	Method     string = "method"
-	URI        string = "uri"
-	Status     string = "status"
-	UserAgent  string = "user_agent"
-	APIVersion string = "api_version"
+	EmailKey      string = "email"
+	CompanyKey    string = "company_key"
+	LatencyKey    string = "latency"
+	MethodKey     string = "method"
+	URIKey        string = "uri"
+	StatusKey     string = "status"
+	UserAgentKey  string = "user_agent"
+	APIVersionKey string = "api_version"
+	PayloadKey    string = "payload"
+	UserKey       string = "user"
 )
 
 // Logger represent common interface for logging functionality

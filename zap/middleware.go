@@ -32,14 +32,14 @@ func EchoMiddleware(l logger.Logger) echo.MiddlewareFunc {
 
 			fields := []interface{}{
 				"remote_ip", c.RealIP(),
-				logger.Email, email,
+				logger.EmailKey, email,
 				logger.CompanyKey, companyKey,
-				logger.Latency, time.Since(start).String(),
-				logger.Method, req.Method,
-				logger.URI, req.RequestURI,
-				logger.Status, res.Status,
-				logger.UserAgent, req.UserAgent(),
-				logger.APIVersion, req.Header.Get("X-API-Version"),
+				logger.LatencyKey, time.Since(start).String(),
+				logger.MethodKey, req.Method,
+				logger.URIKey, req.RequestURI,
+				logger.StatusKey, res.Status,
+				logger.UserAgentKey, req.UserAgent(),
+				logger.APIVersionKey, req.Header.Get("X-API-Version"),
 			}
 
 			n := res.Status
