@@ -1,0 +1,11 @@
+linters:
+  disable:
+    - errcheck
+  enable:
+    - gofmt
+    - gocritic
+linters-settings:
+  gocritic:
+    disabled-checks:
+      - elseif
+      - commentFormatting
