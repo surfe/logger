@@ -1,4 +1,4 @@
-module github.com/Leadjet/Logger
+module github.com/Leadjet/logger
 
 go 1.17
 

@@ -1,7 +1,7 @@
 package zap
 
 import (
-	logger "github.com/Leadjet/Logger"
+	"github.com/Leadjet/logger"
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 	"time"
