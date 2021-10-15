@@ -8,7 +8,7 @@ Logging library for Leadjet backend services.
 go get -u github.com/Leadjet/logger
 ```
 
-## Initiate
+## Usage
 
 Initiate a Zap logger;
 ```
@@ -17,14 +17,6 @@ if err != nil {
     log.Panic(err)
 }
 ```
-
-### Echo Middleware
-
-```
-e.Use(zap.EchoMiddleware(logger.Log))
-```
-
-### Usage
 
 Error with a message and extra fields;
 ```
@@ -40,6 +32,12 @@ l.Log.Errorw("Add Contact (SF)", l.CompanyKey, x.CompanyKey, l.EmailKey, x.User.
 Only add an error (company key won't be sent thus will not be filtered by company!);
 ```
 l.Log.Error("Add Contact (SF)", err)
+```
+
+### Echo Middleware
+
+```
+e.Use(zap.EchoMiddleware(logger.Log))
 ```
 
 ## Development
