@@ -45,6 +45,9 @@ type Logger interface {
 
 	// Debug logs a simple message
 	Debug(args ...interface{})
+
+	// Sync cleanups before exiting
+	Sync()
 }
 
 // SetLogger is the setter for `Log` variable
