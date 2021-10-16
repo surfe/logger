@@ -41,3 +41,7 @@ func (logger *loggerWrapper) Debugw(msg string, keysAndValues ...interface{}) {
 func (logger *loggerWrapper) Debug(args ...interface{}) {
 	logger.lw.Debug(args...)
 }
+
+func (w *wrapper) Sync() {
+	_ = w.logger.Sync()
+}

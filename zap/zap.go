@@ -16,9 +16,9 @@ func RegisterLog() error {
 	if err != nil {
 		return errors.Wrap(err, "Init Log")
 	}
-	defer zapLogger.Sync()
 	sugarLog := zapLogger.Sugar()
-	logger.SetLogger(&loggerWrapper{sugarLog})
+	logger.SetLogger(&wrapper{sugarLog})
+
 	return nil
 }
 
