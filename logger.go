@@ -53,7 +53,7 @@ type Logger interface {
 	Sync()
 }
 
-// Log is the getter for `Log` variable
+// Log is the getter for `log` variable which defaults to a wrapped simple `log` instance if `nil`
 func Log() Logger {
 	if log == nil {
 		log = &simple.Logger{}
