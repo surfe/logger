@@ -45,5 +45,5 @@ func (w *Wrapper) Debug(args ...interface{}) {
 }
 
 func (w *Wrapper) Sync() {
-	//	Nothing to sync
+	// Nothing to sync
 }
