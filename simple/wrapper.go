@@ -4,8 +4,7 @@ import (
 	"log"
 )
 
-type Logger struct {
-}
+type Logger struct{}
 
 func (w *Logger) Errorf(template string, err interface{}, args ...interface{}) {
 	log.Printf(template, err, args)
