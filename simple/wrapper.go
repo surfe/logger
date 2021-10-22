@@ -20,7 +20,7 @@ func (w *Logger) Error(err interface{}, args ...interface{}) {
 }
 
 func (w *Logger) Infof(template string, args ...interface{}) {
-	log.Printf(template, args)
+	log.Printf(template, args...)
 }
 
 func (w *Logger) Infow(msg string, keysAndValues ...interface{}) {
@@ -28,11 +28,11 @@ func (w *Logger) Infow(msg string, keysAndValues ...interface{}) {
 }
 
 func (w *Logger) Info(args ...interface{}) {
-	log.Printf("%v ", args)
+	log.Printf("%v ", args...)
 }
 
 func (w *Logger) Debugf(template string, args ...interface{}) {
-	log.Printf(template, args)
+	log.Printf(template, args...)
 }
 
 func (w *Logger) Debugw(msg string, keysAndValues ...interface{}) {
