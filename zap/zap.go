@@ -8,10 +8,6 @@ import (
 
 // RegisterLog initiates a new Zap logger instance and sets logger.Log
 func RegisterLog() error {
-	if logger.Log != nil {
-		return nil
-	}
-
 	zapLogger, err := initLog()
 	if err != nil {
 		return errors.Wrap(err, "Init Log")
