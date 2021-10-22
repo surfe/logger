@@ -56,7 +56,7 @@ type Logger interface {
 // Log is the getter for `Log` variable
 func Log() Logger {
 	if log == nil {
-		log = &simple.Wrapper{}
+		log = &simple.Logger{}
 	}
 
 	return log
