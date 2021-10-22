@@ -1,7 +1,10 @@
 package logger
 
-// Log is a package level variable, access logging functionality through "Log"
-var Log Logger
+import (
+	"github.com/Leadjet/logger/simple"
+)
+
+var log Logger
 
 // Basic fields
 const (
@@ -50,7 +53,16 @@ type Logger interface {
 	Sync()
 }
 
+// Log is the getter for `Log` variable
+func Log() Logger {
+	if log == nil {
+		log = &simple.Wrapper{}
+	}
+
+	return log
+}
+
 // SetLogger is the setter for `Log` variable
 func SetLogger(newLogger Logger) {
-	Log = newLogger
+	log = newLogger
 }
