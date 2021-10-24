@@ -7,15 +7,33 @@ type wrapper struct {
 }
 
 func (w *wrapper) Errorf(template string, err interface{}, args ...interface{}) {
-	w.logger.With(zap.Error(err.(error))).Errorf(template, args...)
+	if err != nil {
+		w.logger.With(zap.Error(err.(error))).Errorf(template, args...)
+
+		return
+	}
+
+	w.logger.Errorf(template, args...)
 }
 
 func (w *wrapper) Errorw(msg string, err interface{}, keysAndValues ...interface{}) {
-	w.logger.With(zap.Error(err.(error))).Errorw(msg, keysAndValues...)
+	if err != nil {
+		w.logger.With(zap.Error(err.(error))).Errorw(msg, keysAndValues...)
+
+		return
+	}
+
+	w.logger.Errorw(msg, keysAndValues...)
 }
 
 func (w *wrapper) Error(err interface{}, args ...interface{}) {
-	w.logger.With(zap.Error(err.(error))).Errorw("Error", args...)
+	if err != nil {
+		w.logger.With(zap.Error(err.(error))).Errorw("Error", args...)
+
+		return
+	}
+
+	w.logger.Errorw("Error", args...)
 }
 
 func (w *wrapper) Infof(template string, args ...interface{}) {
