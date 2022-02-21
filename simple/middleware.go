@@ -2,12 +2,14 @@ package simple
 
 import (
 	"fmt"
+	"log"
+
+	"github.com/Leadjet/logger"
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
-	"log"
 )
 
-func EchoMiddleware() echo.MiddlewareFunc {
+func (w *Logger) EchoMiddleware(_ *logger.WLogger) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			req := c.Request()

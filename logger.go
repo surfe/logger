@@ -1,26 +1,17 @@
 package logger
 
 import (
-	"github.com/Leadjet/logger/simple"
+	"github.com/labstack/echo/v4"
 )
 
-var log Logger
+var logger Logger
 
-// Basic fields
-const (
-	EmailKey      string = "email"
-	CompanyKey    string = "company_key"
-	LatencyKey    string = "latency"
-	MethodKey     string = "method"
-	URIKey        string = "uri"
-	StatusKey     string = "status"
-	UserAgentKey  string = "user_agent"
-	APIVersionKey string = "api_version"
-	PayloadKey    string = "payload"
-	UserKey       string = "user"
-)
+// Log is the getter for global `logger` variable
+func Log() Logger {
+	return logger
+}
 
-// Logger represent common interface for logging functionality
+// Logger represents common interface for logging functionality
 type Logger interface {
 	// Errorf logs a templated message with the provided error
 	Errorf(format string, err interface{}, args ...interface{})
@@ -51,18 +42,21 @@ type Logger interface {
 
 	// Sync cleanups before exiting
 	Sync()
+
+	// EchoMiddleware returns EchoMiddleware of current logger
+	EchoMiddleware(*WLogger) echo.MiddlewareFunc
 }
 
-// Log is the getter for `log` variable which defaults to a wrapped simple `log` instance if `nil`
-func Log() Logger {
-	if log == nil {
-		log = &simple.Logger{}
-	}
-
-	return log
-}
-
-// SetLogger is the setter for `Log` variable
-func SetLogger(newLogger Logger) {
-	log = newLogger
-}
+// Basic fields
+const (
+	EmailKey      = "email"
+	CompanyKey    = "company_key"
+	LatencyKey    = "latency"
+	MethodKey     = "method"
+	URIKey        = "uri"
+	StatusKey     = "status"
+	UserAgentKey  = "user_agent"
+	APIVersionKey = "api_version"
+	PayloadKey    = "payload"
+	UserKey       = "user"
+)
