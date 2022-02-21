@@ -1,14 +1,15 @@
 package zap
 
 import (
+	"time"
+
 	"github.com/Leadjet/logger"
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
-	"time"
 )
 
-// EchoMiddleware is the echo middleware for Zap logger
-func EchoMiddleware(l logger.Logger) echo.MiddlewareFunc {
+// EchoMiddleware is the echo middleware for Zap Logger
+func (w *Logger) EchoMiddleware(l *logger.WLogger) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			start := time.Now()
@@ -20,6 +21,10 @@ func EchoMiddleware(l logger.Logger) echo.MiddlewareFunc {
 
 			req := c.Request()
 			res := c.Response()
+
+			if l.MatchesAnyDiscardRule(res.Status, req.RequestURI) {
+				return nil
+			}
 
 			var email string
 			var companyKey string
@@ -45,13 +50,13 @@ func EchoMiddleware(l logger.Logger) echo.MiddlewareFunc {
 			n := res.Status
 			switch {
 			case n >= 500:
-				l.Errorw("CRM Error", err, fields...)
+				w.Errorw("CRM Error", err, fields...)
 			case n >= 400:
-				l.Errorw("Server Error", err, fields...)
+				w.Errorw("Server Error", err, fields...)
 			case n >= 300:
-				l.Infow("Redirection", fields...)
+				w.Infow("Redirection", fields...)
 			default:
-				l.Infow("Success", fields...)
+				w.Infow("Success", fields...)
 			}
 
 			return nil
