@@ -1,11 +1,33 @@
 package zap
 
 import (
+	"context"
+
+	"github.com/Leadjet/logger/key"
+	"github.com/Leadjet/logger/logi"
 	"go.uber.org/zap"
 )
 
 type Logger struct {
 	log *zap.SugaredLogger
+}
+
+func (w *Logger) WithContext(ctx context.Context) logi.Logger {
+	email, _ := ctx.Value(key.CtxEmail).(string)
+	company, _ := ctx.Value(key.CtxCompany).(string)
+	corelationID, _ := ctx.Value(key.CtxCorelationID).(string)
+
+	if email == "" {
+		return w
+	}
+
+	return &Logger{
+		log: w.log.With(
+			key.Email, email,
+			key.CompanyKey, company,
+			key.CorelationID, corelationID,
+		),
+	}
 }
 
 func (w *Logger) Errorf(template string, err interface{}, args ...interface{}) {

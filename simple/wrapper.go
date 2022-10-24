@@ -1,10 +1,18 @@
 package simple
 
 import (
+	"context"
 	"log"
+
+	"github.com/Leadjet/logger/logi"
 )
 
 type Logger struct{}
+
+// WithContext does not work with Simple Logger
+func (w *Logger) WithContext(ctx context.Context) logi.Logger {
+	return w
+}
 
 func (w *Logger) Errorf(template string, err interface{}, args ...interface{}) {
 	log.Printf(template, err, args)
