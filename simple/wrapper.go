@@ -15,7 +15,8 @@ func (w *Logger) WithContext(ctx context.Context) logi.Logger {
 }
 
 func (w *Logger) Errorf(template string, err interface{}, args ...interface{}) {
-	log.Printf(template, err, args)
+	args = append(args, err)
+	log.Printf(template+". Error: %v", args...)
 }
 
 func (w *Logger) Errorw(msg string, err interface{}, keysAndValues ...interface{}) {
