@@ -57,7 +57,7 @@ func (w *Logger) EchoMiddleware(l logi.WLogger) echo.MiddlewareFunc {
 			case n >= 500:
 				w.Errorw("CRM Error", err, fields...)
 			case n >= 400:
-				w.Errorw("Server Error", err, fields...)
+				w.Warnw("Server Error", err, fields...)
 			case n >= 300:
 				w.Infow("Redirection", fields...)
 			default:

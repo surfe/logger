@@ -14,16 +14,29 @@ func (w *Logger) WithContext(ctx context.Context) logi.Logger {
 	return w
 }
 
-func (w *Logger) Errorf(template string, err interface{}, args ...interface{}) {
+func (w *Logger) Errorf(template string, err error, args ...interface{}) {
 	args = append(args, err)
 	log.Printf(template+". Error: %v", args...)
 }
 
-func (w *Logger) Errorw(msg string, err interface{}, keysAndValues ...interface{}) {
+func (w *Logger) Errorw(msg string, err error, keysAndValues ...interface{}) {
 	log.Printf(msg+"%v %v ", keysAndValues, err)
 }
 
-func (w *Logger) Error(err interface{}, args ...interface{}) {
+func (w *Logger) Error(err error, args ...interface{}) {
+	log.Printf("%v %v", err, args)
+}
+
+func (w *Logger) Warnf(template string, err error, args ...interface{}) {
+	args = append(args, err)
+	log.Printf(template+". Error: %v", args...)
+}
+
+func (w *Logger) Warnw(msg string, err error, keysAndValues ...interface{}) {
+	log.Printf(msg+"%v %v ", keysAndValues, err)
+}
+
+func (w *Logger) Warn(err error, args ...interface{}) {
 	log.Printf("%v %v", err, args)
 }
 

@@ -30,9 +30,9 @@ func (w *Logger) WithContext(ctx context.Context) logi.Logger {
 	}
 }
 
-func (w *Logger) Errorf(template string, err interface{}, args ...interface{}) {
+func (w *Logger) Errorf(template string, err error, args ...interface{}) {
 	if err != nil {
-		w.log.With(zap.Error(err.(error))).Errorf(template, args...)
+		w.log.With(zap.Error(err)).Errorf(template, args...)
 
 		return
 	}
@@ -40,9 +40,9 @@ func (w *Logger) Errorf(template string, err interface{}, args ...interface{}) {
 	w.log.Errorf(template, args...)
 }
 
-func (w *Logger) Errorw(msg string, err interface{}, keysAndValues ...interface{}) {
+func (w *Logger) Errorw(msg string, err error, keysAndValues ...interface{}) {
 	if err != nil {
-		w.log.With(zap.Error(err.(error))).Errorw(msg, keysAndValues...)
+		w.log.With(zap.Error(err)).Errorw(msg, keysAndValues...)
 
 		return
 	}
@@ -50,14 +50,44 @@ func (w *Logger) Errorw(msg string, err interface{}, keysAndValues ...interface{
 	w.log.Errorw(msg, keysAndValues...)
 }
 
-func (w *Logger) Error(err interface{}, args ...interface{}) {
+func (w *Logger) Error(err error, args ...interface{}) {
 	if err != nil {
-		w.log.With(zap.Error(err.(error))).Errorw("Error", args...)
+		w.log.With(zap.Error(err)).Errorw("Error", args...)
 
 		return
 	}
 
 	w.log.Errorw("Error", args...)
+}
+
+func (w *Logger) Warnf(template string, err error, args ...interface{}) {
+	if err != nil {
+		w.log.With(zap.Error(err)).Warnf(template, args...)
+
+		return
+	}
+
+	w.log.Warnf(template, args...)
+}
+
+func (w *Logger) Warnw(msg string, err error, keysAndValues ...interface{}) {
+	if err != nil {
+		w.log.With(zap.Error(err)).Warnw(msg, keysAndValues...)
+
+		return
+	}
+
+	w.log.Warnw(msg, keysAndValues...)
+}
+
+func (w *Logger) Warn(err error, args ...interface{}) {
+	if err != nil {
+		w.log.With(zap.Error(err)).Warnw("Error", args...)
+
+		return
+	}
+
+	w.log.Warnw("Error", args...)
 }
 
 func (w *Logger) Infof(template string, args ...interface{}) {

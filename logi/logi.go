@@ -16,13 +16,22 @@ type Logger interface {
 	WithContext(ctx context.Context) Logger
 
 	// Errorf logs a templated message with the provided error
-	Errorf(format string, err interface{}, args ...interface{})
+	Errorf(format string, err error, args ...interface{})
 
 	// Errorw logs a message with optional fields
-	Errorw(msg string, err interface{}, keysAndValues ...interface{})
+	Errorw(msg string, err error, keysAndValues ...interface{})
 
 	// Error logs a simple message with the provided error
-	Error(err interface{}, args ...interface{})
+	Error(err error, args ...interface{})
+
+	// Warnf logs a templated message with the provided error
+	Warnf(format string, err error, args ...interface{})
+
+	// Warnw logs a message with optional fields
+	Warnw(msg string, err error, keysAndValues ...interface{})
+
+	// Warn logs a simple message with the provided error
+	Warn(err error, args ...interface{})
 
 	// Infof logs a templated message with optional fields
 	Infof(format string, args ...interface{})
