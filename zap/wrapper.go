@@ -15,7 +15,7 @@ type Logger struct {
 func (w *Logger) WithContext(ctx context.Context) logi.Logger {
 	email, _ := ctx.Value(key.CtxEmail).(string)
 	company, _ := ctx.Value(key.CtxCompany).(string)
-	corelationID, _ := ctx.Value(key.CtxCorelationID).(string)
+	correlationID, _ := ctx.Value(key.CtxCorrelationID).(string)
 
 	if email == "" {
 		return w
@@ -25,7 +25,7 @@ func (w *Logger) WithContext(ctx context.Context) logi.Logger {
 		log: w.log.With(
 			key.Email, email,
 			key.CompanyKey, company,
-			key.CorelationID, corelationID,
+			key.CorrelationID, correlationID,
 		),
 	}
 }

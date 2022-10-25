@@ -21,12 +21,12 @@ func ContextMiddleware() echo.MiddlewareFunc {
 				companyKey = claims["companyKey"].(string)
 			}
 
-			corelationID := random.String(32)
+			correlationID := random.String(32)
 			c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), key.CtxEmail, email)))
 			c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), key.CtxCompany, companyKey)))
-			c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), key.CtxCorelationID, corelationID)))
+			c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), key.CtxCorrelationID, correlationID)))
 
-			c.Response().Header().Set("x-corelation-id", corelationID)
+			c.Response().Header().Set("x-correlation-id", correlationID)
 
 			return next(c)
 		}

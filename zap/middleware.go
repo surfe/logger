@@ -48,8 +48,8 @@ func (w *Logger) EchoMiddleware(l logi.WLogger) echo.MiddlewareFunc {
 				key.APIVersion, req.Header.Get("X-API-Version"),
 			}
 
-			if corelationID, isOk := req.Context().Value(key.CtxCorelationID).(string); isOk {
-				fields = append(fields, key.CorelationID, corelationID)
+			if correlationID, isOk := req.Context().Value(key.CtxCorrelationID).(string); isOk {
+				fields = append(fields, key.CorrelationID, correlationID)
 			}
 
 			n := res.Status

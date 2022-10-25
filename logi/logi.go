@@ -12,7 +12,7 @@ type WLogger interface {
 
 // Logger represents common interface for logging functionality
 type Logger interface {
-	// WithContext will return logger with filled basic fields (email, company, corelationID)
+	// WithContext will return logger with filled basic fields (email, company, correlationID)
 	WithContext(ctx context.Context) Logger
 
 	// Errorf logs a templated message with the provided error
