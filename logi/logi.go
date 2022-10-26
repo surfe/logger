@@ -12,44 +12,35 @@ type WLogger interface {
 
 // Logger represents common interface for logging functionality
 type Logger interface {
-	// WithContext will return logger with filled basic fields (email, company, correlationID)
-	WithContext(ctx context.Context) Logger
+	// With returns logger with basic fields based on context and your custom fields
+	With(ctx context.Context, keysAndValues ...any) Logger
+
+	// Err is a shorter version of With(ctx, "error", err)
+	Err(err error) Logger
 
 	// Errorf logs a templated message with the provided error
-	Errorf(format string, err error, args ...interface{})
-
-	// Errorw logs a message with optional fields
-	Errorw(msg string, err error, keysAndValues ...interface{})
+	Errorf(format string, args ...any)
 
 	// Error logs a simple message with the provided error
-	Error(err error, args ...interface{})
+	Error(args ...any)
 
 	// Warnf logs a templated message with the provided error
-	Warnf(format string, err error, args ...interface{})
-
-	// Warnw logs a message with optional fields
-	Warnw(msg string, err error, keysAndValues ...interface{})
+	Warnf(format string, args ...any)
 
 	// Warn logs a simple message with the provided error
-	Warn(err error, args ...interface{})
+	Warn(args ...any)
 
 	// Infof logs a templated message with optional fields
-	Infof(format string, args ...interface{})
-
-	// Infow logs a message with optional fields
-	Infow(msg string, keysAndValues ...interface{})
+	Infof(format string, args ...any)
 
 	// Info logs a simple message
-	Info(args ...interface{})
+	Info(args ...any)
 
 	// Debugf logs a templated message with optional fields
-	Debugf(format string, args ...interface{})
-
-	// Debugw logs a message with optional fields
-	Debugw(msg string, keysAndValues ...interface{})
+	Debugf(format string, args ...any)
 
 	// Debug logs a simple message
-	Debug(args ...interface{})
+	Debug(args ...any)
 
 	// Sync cleanups before exiting
 	Sync()

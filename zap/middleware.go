@@ -36,7 +36,7 @@ func (w *Logger) EchoMiddleware(l logi.WLogger) echo.MiddlewareFunc {
 				companyKey = claims["companyKey"].(string)
 			}
 
-			fields := []interface{}{
+			fields := []any{
 				"remote_ip", c.RealIP(),
 				key.Email, email,
 				key.CompanyKey, companyKey,
@@ -52,16 +52,17 @@ func (w *Logger) EchoMiddleware(l logi.WLogger) echo.MiddlewareFunc {
 				fields = append(fields, key.CorrelationID, correlationID)
 			}
 
+			log := w.With(c.Request().Context(), fields...)
 			n := res.Status
 			switch {
 			case n >= 500:
-				w.Errorw("CRM Error", err, fields...)
+				log.Err(err).Error("CRM Error")
 			case n >= 400:
-				w.Warnw("Server Error", err, fields...)
+				log.Err(err).Warn("Server Error")
 			case n >= 300:
-				w.Infow("Redirection", fields...)
+				log.Info("Redirection")
 			default:
-				w.Infow("Success", fields...)
+				log.Info("Success")
 			}
 
 			return nil

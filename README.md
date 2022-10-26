@@ -5,13 +5,15 @@ Logging library wrapper with `Echo` and discard rules support.
 ## Install
 
 ```
-go get -u github.com/Leadjet/logger
+go get -u github.com/surfe/logger
 ```
 
 ## Usage
 
+### Initialization
+
 Initiate a Zap logger;
-```
+```go
 zapLogger, err := zap.Init()
 if err != nil {
 	log.Panic(err)
@@ -19,47 +21,39 @@ if err != nil {
 defer zapLogger.Sync()
 ```
 
-Optionally, set DiscardRules;
-```
-l.DiscardRules = config.Config.Log.DiscardRules
-```
-
 Use the logger;
-```
+```go
 l := logger.Use(zapLogger)
 ```
 
-Error with a message and extra fields;
+Optionally, set DiscardRules;
+```go
+l.DiscardRules = config.Config.Log.DiscardRules
 ```
-import l "github.com/Leadjet/logger"
+
+### Logging
+
+Error with a message and extra fields;
+```go
+import l "github.com/surfe/logger"
+
 ...
 
-fields := []interface{}{l.UserKey, x.UserWithCompany}
-l.Log().Errorw("Add Contact (SF)", err, fields...)
-```
-
-Or, simply add key-value pairs;
-```
-l.Log().Errorw("Add Contact (SF)", l.CompanyKey, x.CompanyKey, l.EmailKey, x.User.Email)
-```
-
-Only add an error (company key won't be sent thus will not be filtered by company!);
-```
-l.Log().Error("Add Contact (SF)", err)
+fields := []any{l.UserKey, "abc@xyz.com"}
+l.Log().Err(err).With(ctx, fields...).Error("Add Contact (SF)")
 ```
 
 ### Echo Middleware
 
-```
+```go
 e.Use(l.EchoMiddleware())
 ```
 
 ## Development
 
-Add above `replace` directive to `go.mod` file pointing to the Logger project location.
+You can use `go work` to develop this module:
 
-```
-replace (
-	github.com/Leadjet/logger v1.0.0 => ../logger
-)
+```bash
+go work init .
+go work use ../logger
 ```
