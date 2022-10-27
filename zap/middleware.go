@@ -48,7 +48,7 @@ func (w *Logger) EchoMiddleware(l logi.WLogger) echo.MiddlewareFunc {
 				key.APIVersion, req.Header.Get("X-API-Version"),
 			}
 
-			if correlationID, isOk := req.Context().Value(key.CtxCorrelationID).(string); isOk {
+			if correlationID, isOk := req.Context().Value(key.CtxCorrelationID).(string); isOk && correlationID != "" {
 				fields = append(fields, key.CorrelationID, correlationID)
 			}
 
@@ -58,7 +58,7 @@ func (w *Logger) EchoMiddleware(l logi.WLogger) echo.MiddlewareFunc {
 			case n >= 500:
 				log.Err(err).Error("CRM Error")
 			case n >= 400:
-				log.Err(err).Warn("Server Error")
+				log.Err(err).Warn("Client error")
 			case n >= 300:
 				log.Info("Redirection")
 			default:
