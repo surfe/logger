@@ -12,7 +12,6 @@ type Logger struct {
 	toAppend string
 }
 
-// WithContext does not work with Simple Logger
 func (w *Logger) With(ctx context.Context, args ...any) logi.Logger {
 	toAppend := w.toAppend + " " + fmt.Sprint(args...)
 
