@@ -15,7 +15,7 @@ type Logger interface {
 	// With returns logger with basic fields based on context and your custom fields
 	With(ctx context.Context, keysAndValues ...any) Logger
 
-	// Err is a shorter version of With(ctx, "error", err)
+	// Err returns logger with the provided error
 	Err(err error) Logger
 
 	// Errorf logs a templated message with the provided error
