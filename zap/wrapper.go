@@ -1,6 +1,10 @@
 package zap
 
 import (
+	"context"
+
+	"github.com/Leadjet/logger/key"
+	"github.com/Leadjet/logger/logi"
 	"go.uber.org/zap"
 )
 
@@ -8,57 +12,63 @@ type Logger struct {
 	log *zap.SugaredLogger
 }
 
-func (w *Logger) Errorf(template string, err interface{}, args ...interface{}) {
-	if err != nil {
-		w.log.With(zap.Error(err.(error))).Errorf(template, args...)
-
-		return
+func (w *Logger) With(ctx context.Context, keysAndValues ...any) logi.Logger {
+	fields := []any{}
+	addNotEmpty := func(key string, value string) {
+		if key != "" && value != "" {
+			fields = append(fields, key, value)
+		}
 	}
 
+	if ctx != nil {
+		// We do not want to add empty key-value pairs
+		addNotEmpty(key.Email, ctx.Value(key.CtxEmail).(string))
+		addNotEmpty(key.CompanyKey, ctx.Value(key.CtxCompany).(string))
+		addNotEmpty(key.CorrelationID, ctx.Value(key.CtxCorrelationID).(string))
+	}
+
+	fields = append(fields, keysAndValues...)
+
+	return &Logger{
+		log: w.log.With(fields...),
+	}
+}
+
+func (w *Logger) Err(err error) logi.Logger {
+	return &Logger{
+		log: w.log.With(zap.Error(err)),
+	}
+}
+
+func (w *Logger) Errorf(template string, args ...any) {
 	w.log.Errorf(template, args...)
 }
 
-func (w *Logger) Errorw(msg string, err interface{}, keysAndValues ...interface{}) {
-	if err != nil {
-		w.log.With(zap.Error(err.(error))).Errorw(msg, keysAndValues...)
-
-		return
-	}
-
-	w.log.Errorw(msg, keysAndValues...)
+func (w *Logger) Error(args ...any) {
+	w.log.Error(args...)
 }
 
-func (w *Logger) Error(err interface{}, args ...interface{}) {
-	if err != nil {
-		w.log.With(zap.Error(err.(error))).Errorw("Error", args...)
-
-		return
-	}
-
-	w.log.Errorw("Error", args...)
+func (w *Logger) Warnf(template string, args ...any) {
+	w.log.Warnf(template, args...)
 }
 
-func (w *Logger) Infof(template string, args ...interface{}) {
+func (w *Logger) Warn(args ...any) {
+	w.log.Warn(args...)
+}
+
+func (w *Logger) Infof(template string, args ...any) {
 	w.log.Infof(template, args...)
 }
 
-func (w *Logger) Infow(msg string, keysAndValues ...interface{}) {
-	w.log.Infow(msg, keysAndValues...)
-}
-
-func (w *Logger) Info(args ...interface{}) {
+func (w *Logger) Info(args ...any) {
 	w.log.Info(args...)
 }
 
-func (w *Logger) Debugf(template string, args ...interface{}) {
+func (w *Logger) Debugf(template string, args ...any) {
 	w.log.Debugf(template, args...)
 }
 
-func (w *Logger) Debugw(msg string, keysAndValues ...interface{}) {
-	w.log.Debugw(msg, keysAndValues...)
-}
-
-func (w *Logger) Debug(args ...interface{}) {
+func (w *Logger) Debug(args ...any) {
 	w.log.Debug(args...)
 }
 

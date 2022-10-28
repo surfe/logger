@@ -3,13 +3,14 @@ package zap
 import (
 	"time"
 
-	"github.com/Leadjet/logger"
+	"github.com/Leadjet/logger/key"
+	"github.com/Leadjet/logger/logi"
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 )
 
 // EchoMiddleware is the echo middleware for Zap Logger
-func (w *Logger) EchoMiddleware(l *logger.WLogger) echo.MiddlewareFunc {
+func (w *Logger) EchoMiddleware(l logi.WLogger) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			start := time.Now()
@@ -35,28 +36,33 @@ func (w *Logger) EchoMiddleware(l *logger.WLogger) echo.MiddlewareFunc {
 				companyKey = claims["companyKey"].(string)
 			}
 
-			fields := []interface{}{
+			fields := []any{
 				"remote_ip", c.RealIP(),
-				logger.EmailKey, email,
-				logger.CompanyKey, companyKey,
-				logger.LatencyKey, time.Since(start).String(),
-				logger.MethodKey, req.Method,
-				logger.URIKey, req.RequestURI,
-				logger.StatusKey, res.Status,
-				logger.UserAgentKey, req.UserAgent(),
-				logger.APIVersionKey, req.Header.Get("X-API-Version"),
+				key.Email, email,
+				key.CompanyKey, companyKey,
+				key.Latency, time.Since(start).String(),
+				key.Method, req.Method,
+				key.URI, req.RequestURI,
+				key.Status, res.Status,
+				key.UserAgent, req.UserAgent(),
+				key.APIVersion, req.Header.Get("X-API-Version"),
 			}
 
+			if correlationID, isOk := req.Context().Value(key.CtxCorrelationID).(string); isOk && correlationID != "" {
+				fields = append(fields, key.CorrelationID, correlationID)
+			}
+
+			log := w.With(c.Request().Context(), fields...)
 			n := res.Status
 			switch {
 			case n >= 500:
-				w.Errorw("CRM Error", err, fields...)
+				log.Err(err).Error("CRM Error")
 			case n >= 400:
-				w.Errorw("Server Error", err, fields...)
+				log.Err(err).Warn("Client error")
 			case n >= 300:
-				w.Infow("Redirection", fields...)
+				log.Info("Redirection")
 			default:
-				w.Infow("Success", fields...)
+				log.Info("Success")
 			}
 
 			return nil

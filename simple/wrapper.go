@@ -1,47 +1,68 @@
 package simple
 
 import (
+	"context"
+	"fmt"
 	"log"
+
+	"github.com/Leadjet/logger/logi"
 )
 
-type Logger struct{}
-
-func (w *Logger) Errorf(template string, err interface{}, args ...interface{}) {
-	log.Printf(template, err, args)
+type Logger struct {
+	toAppend string
 }
 
-func (w *Logger) Errorw(msg string, err interface{}, keysAndValues ...interface{}) {
-	log.Printf(msg+"%v %v ", keysAndValues, err)
+func (w *Logger) With(ctx context.Context, args ...any) logi.Logger {
+	toAppend := w.toAppend + " " + fmt.Sprint(args...)
+
+	return &Logger{toAppend: toAppend}
 }
 
-func (w *Logger) Error(err interface{}, args ...interface{}) {
-	log.Printf("%v %v", err, args)
+func (w *Logger) Err(err error) logi.Logger {
+	return w.With(context.TODO(), "error", err)
 }
 
-func (w *Logger) Infof(template string, args ...interface{}) {
-	log.Printf(template, args...)
+func (w *Logger) Errorf(template string, args ...any) {
+	w.printf(template, args...)
 }
 
-func (w *Logger) Infow(msg string, keysAndValues ...interface{}) {
-	log.Printf(msg+"%v ", keysAndValues)
+func (w *Logger) Error(args ...any) {
+	w.println(args...)
 }
 
-func (w *Logger) Info(args ...interface{}) {
-	log.Printf("%v ", args...)
+func (w *Logger) Warnf(template string, args ...any) {
+	w.printf(template, args...)
 }
 
-func (w *Logger) Debugf(template string, args ...interface{}) {
-	log.Printf(template, args...)
+func (w *Logger) Warn(args ...any) {
+	w.println(args...)
 }
 
-func (w *Logger) Debugw(msg string, keysAndValues ...interface{}) {
-	log.Printf(msg+"%v ", keysAndValues)
+func (w *Logger) Infof(template string, args ...any) {
+	w.printf(template, args...)
 }
 
-func (w *Logger) Debug(args ...interface{}) {
-	log.Printf("%v ", args)
+func (w *Logger) Info(args ...any) {
+	w.println(args...)
+}
+
+func (w *Logger) Debugf(template string, args ...any) {
+	w.printf(template, args...)
+}
+
+func (w *Logger) Debug(args ...any) {
+	w.println(args...)
 }
 
 func (w *Logger) Sync() {
 	// Nothing to sync
+}
+
+func (w *Logger) println(args ...any) {
+	print := w.toAppend + "; " + fmt.Sprint(args...)
+	log.Println(print)
+}
+
+func (w *Logger) printf(template string, args ...any) {
+	log.Printf(w.toAppend+"; "+template, args...)
 }
