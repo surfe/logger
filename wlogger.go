@@ -1,8 +1,8 @@
 package logger
 
 import (
-	"github.com/Leadjet/logger/logi"
 	"github.com/labstack/echo/v4"
+	"github.com/surfe/logger/logi"
 )
 
 type wLogger struct {

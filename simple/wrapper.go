@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Leadjet/logger/logi"
+	"github.com/surfe/logger/logi"
 )
 
 type Logger struct {

@@ -3,10 +3,10 @@ package zap
 import (
 	"time"
 
-	"github.com/Leadjet/logger/key"
-	"github.com/Leadjet/logger/logi"
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
+	"github.com/surfe/logger/key"
+	"github.com/surfe/logger/logi"
 )
 
 // EchoMiddleware is the echo middleware for Zap Logger

@@ -3,10 +3,10 @@ package reqctx
 import (
 	"context"
 
-	"github.com/Leadjet/logger/key"
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/random"
+	"github.com/surfe/logger/key"
 )
 
 func ContextMiddleware() echo.MiddlewareFunc {
