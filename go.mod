@@ -1,4 +1,4 @@
-module github.com/Leadjet/logger
+module github.com/surfe/logger
 
 go 1.18
 

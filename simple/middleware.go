@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Leadjet/logger/logi"
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
+	"github.com/surfe/logger/logi"
 )
 
 func (w *Logger) EchoMiddleware(_ logi.WLogger) echo.MiddlewareFunc {

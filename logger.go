@@ -1,9 +1,9 @@
 package logger
 
 import (
-	"github.com/Leadjet/logger/logi"
-	"github.com/Leadjet/logger/simple"
-	"github.com/Leadjet/logger/zap"
+	"github.com/surfe/logger/logi"
+	"github.com/surfe/logger/simple"
+	"github.com/surfe/logger/zap"
 )
 
 var logger logi.Logger = &simple.Logger{}
