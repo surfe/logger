@@ -14,17 +14,18 @@ type Logger struct {
 
 func (w *Logger) With(ctx context.Context, keysAndValues ...any) logi.Logger {
 	fields := []any{}
-	addNotEmpty := func(key string, value string) {
-		if key != "" && value != "" {
+	addNotEmpty := func(key string, value any) {
+		val, isOk := value.(string)
+		if isOk && key != "" && val != "" {
 			fields = append(fields, key, value)
 		}
 	}
 
 	if ctx != nil {
 		// We do not want to add empty key-value pairs
-		addNotEmpty(key.Email, ctx.Value(key.CtxEmail).(string))
-		addNotEmpty(key.CompanyKey, ctx.Value(key.CtxCompany).(string))
-		addNotEmpty(key.CorrelationID, ctx.Value(key.CtxCorrelationID).(string))
+		addNotEmpty(key.Email, ctx.Value(key.CtxEmail))
+		addNotEmpty(key.CompanyKey, ctx.Value(key.CtxCompany))
+		addNotEmpty(key.CorrelationID, ctx.Value(key.CtxCorrelationID))
 	}
 
 	fields = append(fields, keysAndValues...)
