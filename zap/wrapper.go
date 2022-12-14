@@ -73,6 +73,14 @@ func (w *Logger) Debug(args ...any) {
 	w.log.Debug(args...)
 }
 
+func (w *Logger) Fatalf(template string, args ...any) {
+	w.log.Fatalf(template, args...)
+}
+
+func (w *Logger) Fatal(args ...any) {
+	w.log.Fatal(args...)
+}
+
 func (w *Logger) Sync() {
 	_ = w.log.Sync()
 }
