@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/surfe/logger/logi"
 )
@@ -52,6 +53,16 @@ func (w *Logger) Debugf(template string, args ...any) {
 
 func (w *Logger) Debug(args ...any) {
 	w.println(args...)
+}
+
+func (w *Logger) Fatalf(template string, args ...any) {
+	w.printf(template, args...)
+	os.Exit(1)
+}
+
+func (w *Logger) Fatal(args ...any) {
+	w.println(args...)
+	os.Exit(1)
 }
 
 func (w *Logger) Sync() {

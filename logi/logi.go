@@ -42,6 +42,12 @@ type Logger interface {
 	// Debug logs a simple message
 	Debug(args ...any)
 
+	// Fatalf logs a templated message, then exits
+	Fatalf(format string, args ...any)
+
+	// Fatal logs a simple message, then exits
+	Fatal(args ...any)
+
 	// Sync cleanups before exiting
 	Sync()
 

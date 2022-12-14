@@ -2,6 +2,7 @@ package zap
 
 import (
 	"context"
+	"os"
 
 	"github.com/surfe/logger/key"
 	"github.com/surfe/logger/logi"
@@ -71,6 +72,16 @@ func (w *Logger) Debugf(template string, args ...any) {
 
 func (w *Logger) Debug(args ...any) {
 	w.log.Debug(args...)
+}
+
+func (w *Logger) Fatalf(template string, args ...any) {
+	w.log.Fatalf(template, args...)
+	os.Exit(1)
+}
+
+func (w *Logger) Fatal(args ...any) {
+	w.log.Fatal(args...)
+	os.Exit(1)
 }
 
 func (w *Logger) Sync() {
