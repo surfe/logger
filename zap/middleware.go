@@ -48,7 +48,7 @@ func (w *Logger) EchoMiddleware(l logi.WLogger) echo.MiddlewareFunc {
 				key.APIVersion, res.Header().Get("API-Version"),
 			}
 
-			// Backward compatibility. Fix after no more `deprecated-version-used`
+			// Backward compatibility. Remove after no more `deprecated-version-used`
 			if ver := req.Header.Get("Extension-Version"); ver != "" {
 				fields = append(fields, key.ExtensionVersion, ver)
 			} else {
