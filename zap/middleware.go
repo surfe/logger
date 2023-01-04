@@ -45,7 +45,15 @@ func (w *Logger) EchoMiddleware(l logi.WLogger) echo.MiddlewareFunc {
 				key.URI, req.RequestURI,
 				key.Status, res.Status,
 				key.UserAgent, req.UserAgent(),
-				key.APIVersion, req.Header.Get("X-API-Version"),
+				key.APIVersion, res.Header().Get("API-Version"),
+			}
+
+			// Backward compatibility. Remove after no more `deprecated-version-used`
+			if ver := req.Header.Get("Extension-Version"); ver != "" {
+				fields = append(fields, key.ExtensionVersion, ver)
+			} else {
+				fields = append(fields, key.ExtensionVersion, req.Header.Get("X-API-Version"))
+				fields = append(fields, "deprecated_version_header_used", "true")
 			}
 
 			if correlationID, isOk := req.Context().Value(key.CtxCorrelationID).(string); isOk && correlationID != "" {
