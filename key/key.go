@@ -13,6 +13,7 @@ const (
 	Payload          = "payload"
 	User             = "user"
 	CorrelationID    = "correlation_id"
+	Tool             = "tool"
 )
 
 type ctxKey int
@@ -21,4 +22,5 @@ const (
 	CtxEmail ctxKey = iota
 	CtxCompany
 	CtxCorrelationID
+	CtxTool
 )
