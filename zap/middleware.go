@@ -40,7 +40,7 @@ func (w *Logger) EchoMiddleware(l logi.WLogger) echo.MiddlewareFunc {
 				"remote_ip", c.RealIP(),
 				key.Email, email,
 				key.CompanyKey, companyKey,
-				key.Latency, time.Since(start).String(),
+				key.Latency, time.Since(start).Milliseconds(),
 				key.Method, req.Method,
 				key.URI, req.RequestURI,
 				key.Status, res.Status,
