@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
+	"strings"
 
 	"github.com/surfe/logger/logi"
 )
@@ -14,9 +16,35 @@ type Logger struct {
 }
 
 func (w *Logger) With(ctx context.Context, args ...any) logi.Logger {
-	toAppend := w.toAppend + " " + fmt.Sprint(args...)
+	var sb strings.Builder
 
-	return &Logger{toAppend: toAppend}
+	sb.WriteString(w.toAppend)
+	if len(w.toAppend) > 0 {
+		sb.WriteString(";")
+	}
+
+	for i, a := range args {
+		switch v := a.(type) {
+		case int:
+			sb.WriteString(strconv.Itoa(v))
+		case float64:
+			sb.WriteString(strconv.FormatFloat(v, 'f', -1, 64))
+		case string:
+			sb.WriteString(v)
+		case bool:
+			sb.WriteString(strconv.FormatBool(v))
+		default:
+			sb.WriteString(fmt.Sprintf("%v", v))
+		}
+
+		if i%2 == 0 {
+			sb.WriteString(": ")
+		} else {
+			sb.WriteString("; ")
+		}
+	}
+
+	return &Logger{toAppend: sb.String()}
 }
 
 func (w *Logger) Err(err error) logi.Logger {
