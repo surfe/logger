@@ -26,9 +26,9 @@ func TestLogger_With(t *testing.T) {
 		{
 			name:     "Log with some keys",
 			toAppend: "",
-			args:     []any{"payload", "{\"key\": true}", "external", "true"},
+			args:     []any{"payload", struct{ key int }{key: 5}, "external", true},
 			want: &Logger{
-				toAppend: "payload: {\"key\": true}; external: true; ",
+				toAppend: "payload: {5}; external: true; ",
 			},
 		},
 	}
