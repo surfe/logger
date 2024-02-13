@@ -18,8 +18,8 @@ type Logger struct {
 func (w *Logger) With(ctx context.Context, args ...any) logi.Logger {
 	var sb strings.Builder
 
-	sb.WriteString(w.toAppend)
 	if len(w.toAppend) > 0 {
+		sb.WriteString(w.toAppend)
 		sb.WriteString(";")
 	}
 
@@ -98,10 +98,9 @@ func (w *Logger) Sync() {
 }
 
 func (w *Logger) println(args ...any) {
-	print := w.toAppend + "; " + fmt.Sprint(args...)
-	log.Println(print)
+	log.Println(w.toAppend, fmt.Sprint(args...))
 }
 
 func (w *Logger) printf(template string, args ...any) {
-	log.Printf(w.toAppend+"; "+template, args...)
+	log.Printf(w.toAppend+template, args...)
 }
