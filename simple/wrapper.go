@@ -14,7 +14,19 @@ type Logger struct {
 }
 
 func (w *Logger) With(ctx context.Context, args ...any) logi.Logger {
-	toAppend := w.toAppend + " " + fmt.Sprint(args...)
+	toAppend := w.toAppend
+	if len(toAppend) > 0 {
+		toAppend += ";"
+	}
+
+	for i, a := range args {
+		toAppend += fmt.Sprintf("%v", a)
+		if i%2 == 0 {
+			toAppend += ": "
+		} else {
+			toAppend += "; "
+		}
+	}
 
 	return &Logger{toAppend: toAppend}
 }
