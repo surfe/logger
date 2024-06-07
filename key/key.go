@@ -6,6 +6,8 @@ const (
 	Latency          = "latency"
 	Method           = "method"
 	URI              = "uri"
+	Path             = "path"
+	External         = "external"
 	Status           = "status"
 	UserAgent        = "user_agent"
 	APIVersion       = "api_version"
