@@ -38,22 +38,17 @@ func (w *Logger) EchoMiddleware(l logi.WLogger) echo.MiddlewareFunc {
 
 			fields := []any{
 				"remote_ip", c.RealIP(),
+				key.External, false,
 				key.Email, email,
 				key.CompanyKey, companyKey,
 				key.Latency, time.Since(start).Milliseconds(),
 				key.Method, req.Method,
 				key.URI, req.RequestURI,
+				key.Path, req.URL.Path,
 				key.Status, res.Status,
 				key.UserAgent, req.UserAgent(),
 				key.APIVersion, res.Header().Get("API-Version"),
-			}
-
-			// Backward compatibility. Remove after no more `deprecated-version-used`
-			if ver := req.Header.Get("Extension-Version"); ver != "" {
-				fields = append(fields, key.ExtensionVersion, ver)
-			} else if ver := req.Header.Get("X-API-Version"); ver != "" {
-				fields = append(fields, key.ExtensionVersion, ver)
-				fields = append(fields, "deprecated_version_header_used", "true")
+				key.ExtensionVersion, res.Header().Get("Extension-Version"),
 			}
 
 			if correlationID, isOk := req.Context().Value(key.CtxCorrelationID).(string); isOk && correlationID != "" {
