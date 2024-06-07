@@ -3,7 +3,6 @@ linters:
     - gofmt
     - gocritic
     - dupl
-    - ifshort
     - importas
     - makezero
     - nestif
