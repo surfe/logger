@@ -47,8 +47,8 @@ func (w *Logger) EchoMiddleware(l logi.WLogger) echo.MiddlewareFunc {
 				key.Path, req.URL.Path,
 				key.Status, res.Status,
 				key.UserAgent, req.UserAgent(),
-				key.APIVersion, res.Header().Get("API-Version"),
-				key.ExtensionVersion, res.Header().Get("Extension-Version"),
+				key.APIVersion, req.Header.Get("API-Version"),
+				key.ExtensionVersion, req.Header.Get("Extension-Version"),
 			}
 
 			if correlationID, isOk := req.Context().Value(key.CtxCorrelationID).(string); isOk && correlationID != "" {
