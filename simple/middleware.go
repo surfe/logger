@@ -6,10 +6,9 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
-	"github.com/surfe/logger/logi"
 )
 
-func (w *Logger) EchoMiddleware(_ logi.WLogger) echo.MiddlewareFunc {
+func (w *Logger) EchoMiddleware() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			req := c.Request()

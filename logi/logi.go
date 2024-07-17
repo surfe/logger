@@ -6,10 +6,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type WLogger interface {
-	MatchesAnyDiscardRule(status int, uri string) bool
-}
-
 // Logger represents common interface for logging functionality
 type Logger interface {
 	// With returns logger with basic fields based on context and your custom fields
@@ -52,5 +48,5 @@ type Logger interface {
 	Sync()
 
 	// EchoMiddleware returns EchoMiddleware of current logger
-	EchoMiddleware(WLogger) echo.MiddlewareFunc
+	EchoMiddleware() echo.MiddlewareFunc
 }

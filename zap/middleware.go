@@ -6,11 +6,10 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 	"github.com/surfe/logger/key"
-	"github.com/surfe/logger/logi"
 )
 
 // EchoMiddleware is the echo middleware for Zap Logger
-func (w *Logger) EchoMiddleware(l logi.WLogger) echo.MiddlewareFunc {
+func (w *Logger) EchoMiddleware() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			start := time.Now()
@@ -22,10 +21,6 @@ func (w *Logger) EchoMiddleware(l logi.WLogger) echo.MiddlewareFunc {
 
 			req := c.Request()
 			res := c.Response()
-
-			if l.MatchesAnyDiscardRule(res.Status, req.RequestURI) {
-				return nil
-			}
 
 			var email string
 			var companyKey string
