@@ -1,6 +1,6 @@
 # Logger
 
-Logging library wrapper with `Echo` and discard rules support.
+Logging library wrapper with `Echo`.
 
 ## Install
 
@@ -24,11 +24,6 @@ defer zapLogger.Sync()
 Use the logger;
 ```go
 l := logger.Use(zapLogger)
-```
-
-Optionally, set DiscardRules;
-```go
-l.DiscardRules = config.Config.Log.DiscardRules
 ```
 
 ### Logging
