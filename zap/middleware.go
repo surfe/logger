@@ -31,36 +31,31 @@ func (w *Logger) EchoMiddleware() echo.MiddlewareFunc {
 				companyKey = claims["companyKey"].(string)
 			}
 
-			fields := []any{
-				"remote_ip", c.RealIP(),
-				key.External, false,
-				key.Email, email,
-				key.CompanyKey, companyKey,
-				key.Latency, time.Since(start).Milliseconds(),
-				key.Method, req.Method,
-				key.URI, req.RequestURI,
-				key.Path, req.URL.Path,
-				key.Status, res.Status,
-				key.UserAgent, req.UserAgent(),
-				key.APIVersion, req.Header.Get("API-Version"),
-				key.ExtensionVersion, req.Header.Get("Extension-Version"),
-			}
+			fields := []any{}
+			appendFilledFieldsOnly(&fields, "remote_ip", c.RealIP())
+			appendFilledFieldsOnly(&fields, key.External, false)
+			appendFilledFieldsOnly(&fields, key.Email, email)
+			appendFilledFieldsOnly(&fields, key.CompanyKey, companyKey)
+			appendFilledFieldsOnly(&fields, key.ProcessingTime, time.Since(start).Milliseconds())
+			appendFilledFieldsOnly(&fields, key.Method, req.Method)
+			appendFilledFieldsOnly(&fields, key.URI, req.RequestURI)
+			appendFilledFieldsOnly(&fields, key.Path, req.URL.Path)
+			appendFilledFieldsOnly(&fields, key.Status, res.Status)
+			appendFilledFieldsOnly(&fields, key.UserAgent, req.UserAgent())
+			appendFilledFieldsOnly(&fields, key.APIVersion, req.Header.Get("API-Version"))
+			appendFilledFieldsOnly(&fields, key.ExtensionVersion, req.Header.Get("Extension-Version"))
 
 			if correlationID, isOk := req.Context().Value(key.CtxCorrelationID).(string); isOk && correlationID != "" {
 				fields = append(fields, key.CorrelationID, correlationID)
 			}
 
-			log := w.With(c.Request().Context(), fields...)
+			log := w.Ctx(c.Request().Context()).With(fields...)
 			n := res.Status
-			switch {
-			case n >= 500:
+			// Status 5XX is logged as error as this should not happen in production.
+			if n >= 500 {
 				log.Err(err).Error("CRM Error")
-			case n >= 400:
-				log.Err(err).Warn("Client error")
-			case n >= 300:
-				log.Info("Redirection")
-			default:
-				log.Info("Success")
+			} else {
+				log.Info("Incoming request")
 			}
 
 			return nil

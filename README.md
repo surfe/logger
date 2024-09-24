@@ -30,12 +30,12 @@ l := logger.Use(zapLogger)
 
 Error with a message and extra fields;
 ```go
-import l "github.com/surfe/logger"
+import "github.com/surfe/logger"
 
 ...
 
 fields := []any{l.UserKey, "abc@xyz.com"}
-l.Log().Err(err).With(ctx, fields...).Error("Add Contact (SF)")
+logger.Log(ctx).Err(err).With(fields...).Error("Add Contact (SF)")
 ```
 
 ### Echo Middleware

@@ -8,8 +8,11 @@ import (
 
 // Logger represents common interface for logging functionality
 type Logger interface {
+	// Adds context to logger. Logger will extract key/value pairs from it.
+	Ctx(ctx context.Context) Logger
+
 	// With returns logger with basic fields based on context and your custom fields
-	With(ctx context.Context, keysAndValues ...any) Logger
+	With(keysAndValues ...any) Logger
 
 	// Err returns logger with the provided error
 	Err(err error) Logger

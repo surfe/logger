@@ -9,7 +9,7 @@ import (
 	"github.com/surfe/logger/key"
 )
 
-func ContextMiddleware() echo.MiddlewareFunc {
+func ContextMiddleware(apiVersion string) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			var email string
@@ -21,12 +21,25 @@ func ContextMiddleware() echo.MiddlewareFunc {
 				companyKey = claims["companyKey"].(string)
 			}
 
-			correlationID := random.String(32)
+			// Extract data from headers if no user.
+			if email == "" {
+				email = c.Request().Header.Get(key.HeaderEmail)
+			}
+			if companyKey == "" {
+				companyKey = c.Request().Header.Get(key.HeaderCompanyKey)
+			}
+
+			correlationID := c.Request().Header.Get(key.HeaderCorrelationID)
+			if correlationID == "" {
+				correlationID = random.String(32)
+			}
+
 			c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), key.CtxEmail, email)))
 			c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), key.CtxCompany, companyKey)))
 			c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), key.CtxCorrelationID, correlationID)))
+			c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), key.CtxAPIVersion, apiVersion)))
 
-			c.Response().Header().Set("x-correlation-id", correlationID)
+			c.Response().Header().Set(key.HeaderCorrelationID, correlationID)
 
 			return next(c)
 		}
