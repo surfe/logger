@@ -3,9 +3,9 @@ package logger
 import (
 	"context"
 
-	"github.com/surfe/logger/logi"
-	"github.com/surfe/logger/simple"
-	"github.com/surfe/logger/zap"
+	"github.com/surfe/logger/v2/logi"
+	"github.com/surfe/logger/v2/simple"
+	"github.com/surfe/logger/v2/zap"
 )
 
 var logger logi.Logger = &simple.Logger{}

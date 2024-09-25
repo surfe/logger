@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/surfe/logger/logi"
+	"github.com/surfe/logger/v2/logi"
 )
 
 func TestLogger_With(t *testing.T) {

@@ -3,8 +3,8 @@ package zap
 import (
 	"context"
 
-	"github.com/surfe/logger/key"
-	"github.com/surfe/logger/logi"
+	"github.com/surfe/logger/v2/key"
+	"github.com/surfe/logger/v2/logi"
 	"go.uber.org/zap"
 )
 

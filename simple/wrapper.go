@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/surfe/logger/logi"
+	"github.com/surfe/logger/v2/logi"
 )
 
 type Logger struct {
