@@ -2,7 +2,7 @@ package logger
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/surfe/logger/logi"
+	"github.com/surfe/logger/v2/logi"
 )
 
 type wLogger struct{}

@@ -6,7 +6,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/random"
-	"github.com/surfe/logger/key"
+	"github.com/surfe/logger/v2/key"
 )
 
 func ContextMiddleware(apiVersion string) echo.MiddlewareFunc {

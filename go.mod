@@ -1,6 +1,6 @@
-module github.com/surfe/logger
+module github.com/surfe/logger/v2
 
-go 1.22
+go 1.23
 
 require (
 	github.com/golang-jwt/jwt/v5 v5.2.1
