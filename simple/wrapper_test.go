@@ -1,7 +1,6 @@
 package simple
 
 import (
-	"context"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -37,7 +36,7 @@ func TestLogger_With(t *testing.T) {
 			w := &Logger{
 				toAppend: tt.toAppend,
 			}
-			got := w.With(context.TODO(), tt.args...)
+			got := w.With(tt.args...)
 			assert.Equal(t, tt.want, got)
 		})
 	}

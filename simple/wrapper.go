@@ -15,7 +15,11 @@ type Logger struct {
 	toAppend string
 }
 
-func (w *Logger) With(ctx context.Context, args ...any) logi.Logger {
+func (w *Logger) Ctx(ctx context.Context) logi.Logger {
+	return w
+}
+
+func (w *Logger) With(args ...any) logi.Logger {
 	var sb strings.Builder
 
 	if len(w.toAppend) > 0 {
@@ -48,7 +52,7 @@ func (w *Logger) With(ctx context.Context, args ...any) logi.Logger {
 }
 
 func (w *Logger) Err(err error) logi.Logger {
-	return w.With(context.TODO(), "error", err)
+	return w.With("error", err)
 }
 
 func (w *Logger) Errorf(template string, args ...any) {

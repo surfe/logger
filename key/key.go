@@ -4,6 +4,7 @@ const (
 	Email            = "email"
 	CompanyKey       = "company_key"
 	Latency          = "latency"
+	ProcessingTime   = "processing_time"
 	Method           = "method"
 	URI              = "uri"
 	Path             = "path"
@@ -17,6 +18,10 @@ const (
 	CorrelationID    = "correlation_id"
 	Tool             = "tool"
 	ProductFeature   = "product_feature"
+
+	HeaderCorrelationID = "correlation-id"
+	HeaderEmail         = "email"
+	HeaderCompanyKey    = "company-key"
 )
 
 type ctxKey int
@@ -27,4 +32,5 @@ const (
 	CtxCorrelationID
 	CtxTool
 	CtxProductFeature
+	CtxAPIVersion
 )

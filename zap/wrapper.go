@@ -12,28 +12,27 @@ type Logger struct {
 	log *zap.SugaredLogger
 }
 
-func (w *Logger) With(ctx context.Context, keysAndValues ...any) logi.Logger {
+func (w *Logger) Ctx(ctx context.Context) logi.Logger {
 	fields := []any{}
-	addNotEmpty := func(key string, value any) {
-		val, isOk := value.(string)
-		if isOk && key != "" && val != "" {
-			fields = append(fields, key, value)
-		}
-	}
 
 	if ctx != nil {
 		// We do not want to add empty key-value pairs
-		addNotEmpty(key.Email, ctx.Value(key.CtxEmail))
-		addNotEmpty(key.CompanyKey, ctx.Value(key.CtxCompany))
-		addNotEmpty(key.CorrelationID, ctx.Value(key.CtxCorrelationID))
-		addNotEmpty(key.Tool, ctx.Value(key.CtxTool))
-		addNotEmpty(key.ProductFeature, ctx.Value(key.CtxProductFeature))
+		appendFilledFieldsOnly(&fields, key.Email, ctx.Value(key.CtxEmail))
+		appendFilledFieldsOnly(&fields, key.CompanyKey, ctx.Value(key.CtxCompany))
+		appendFilledFieldsOnly(&fields, key.CorrelationID, ctx.Value(key.CtxCorrelationID))
+		appendFilledFieldsOnly(&fields, key.Tool, ctx.Value(key.CtxTool))
+		appendFilledFieldsOnly(&fields, key.ProductFeature, ctx.Value(key.CtxProductFeature))
+		appendFilledFieldsOnly(&fields, key.ProductFeature, ctx.Value(key.CtxAPIVersion))
 	}
-
-	fields = append(fields, keysAndValues...)
 
 	return &Logger{
 		log: w.log.With(fields...),
+	}
+}
+
+func (w *Logger) With(keysAndValues ...any) logi.Logger {
+	return &Logger{
+		log: w.log.With(keysAndValues...),
 	}
 }
 

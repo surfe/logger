@@ -17,3 +17,10 @@ func Init() (*Logger, error) {
 
 	return &Logger{sugarLog}, nil
 }
+
+func appendFilledFieldsOnly(fields *[]any, key string, value any) {
+	val, isOk := value.(string)
+	if isOk && key != "" && val != "" {
+		*fields = append(*fields, key, value)
+	}
+}
