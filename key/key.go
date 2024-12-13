@@ -17,6 +17,7 @@ const (
 	CorrelationID    = "correlation_id"
 	Tool             = "tool"
 	ProductFeature   = "product_feature"
+	JobDetails       = "job_details"
 )
 
 type ctxKey int
@@ -27,4 +28,5 @@ const (
 	CtxCorrelationID
 	CtxTool
 	CtxProductFeature
+	CtxJobDetails
 )
