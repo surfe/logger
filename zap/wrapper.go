@@ -28,6 +28,7 @@ func (w *Logger) With(ctx context.Context, keysAndValues ...any) logi.Logger {
 		addNotEmpty(key.CorrelationID, ctx.Value(key.CtxCorrelationID))
 		addNotEmpty(key.Tool, ctx.Value(key.CtxTool))
 		addNotEmpty(key.ProductFeature, ctx.Value(key.CtxProductFeature))
+		addNotEmpty(key.JobDetails, ctx.Value(key.CtxJobDetails))
 	}
 
 	fields = append(fields, keysAndValues...)
