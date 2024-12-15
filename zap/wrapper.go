@@ -14,21 +14,29 @@ type Logger struct {
 
 func (w *Logger) With(ctx context.Context, keysAndValues ...any) logi.Logger {
 	fields := []any{}
-	addNotEmpty := func(key string, value any) {
+	addNotEmptyStr := func(key string, value any) {
 		val, isOk := value.(string)
 		if isOk && key != "" && val != "" {
 			fields = append(fields, key, value)
 		}
 	}
 
+	addNotEmptyObj := func(key string, value any) {
+		if value == nil || key == "" {
+			return
+		}
+
+		fields = append(fields, key, value)
+	}
+
 	if ctx != nil {
 		// We do not want to add empty key-value pairs
-		addNotEmpty(key.Email, ctx.Value(key.CtxEmail))
-		addNotEmpty(key.CompanyKey, ctx.Value(key.CtxCompany))
-		addNotEmpty(key.CorrelationID, ctx.Value(key.CtxCorrelationID))
-		addNotEmpty(key.Tool, ctx.Value(key.CtxTool))
-		addNotEmpty(key.ProductFeature, ctx.Value(key.CtxProductFeature))
-		addNotEmpty(key.JobDetails, ctx.Value(key.CtxJobDetails))
+		addNotEmptyStr(key.Email, ctx.Value(key.CtxEmail))
+		addNotEmptyStr(key.CompanyKey, ctx.Value(key.CtxCompany))
+		addNotEmptyStr(key.CorrelationID, ctx.Value(key.CtxCorrelationID))
+		addNotEmptyStr(key.Tool, ctx.Value(key.CtxTool))
+		addNotEmptyStr(key.ProductFeature, ctx.Value(key.CtxProductFeature))
+		addNotEmptyObj(key.JobDetails, ctx.Value(key.CtxJobDetails))
 	}
 
 	fields = append(fields, keysAndValues...)
