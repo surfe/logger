@@ -14,11 +14,15 @@ type Logger struct {
 
 func (w *Logger) With(ctx context.Context, keysAndValues ...any) logi.Logger {
 	fields := []any{}
+
 	addNotEmpty := func(key string, value any) {
-		val, isOk := value.(string)
-		if isOk && key != "" && val != "" {
-			fields = append(fields, key, value)
+		if key == "" || value == nil {
+			return
 		}
+		if val, isOk := value.(string); isOk && val == "" {
+			return
+		}
+		fields = append(fields, key, value)
 	}
 
 	if ctx != nil {
