@@ -18,6 +18,7 @@ const (
 	CorrelationID    = "correlation_id"
 	Tool             = "tool"
 	ProductFeature   = "product_feature"
+	JobDetails       = "job_details"
 
 	HeaderCorrelationID = "correlation-id"
 	HeaderEmail         = "email"
@@ -33,4 +34,5 @@ const (
 	CtxTool
 	CtxProductFeature
 	CtxAPIVersion
+	CtxJobDetails
 )
