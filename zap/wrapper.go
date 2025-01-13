@@ -22,7 +22,8 @@ func (w *Logger) Ctx(ctx context.Context) logi.Logger {
 		appendFilledFieldsOnly(&fields, key.CorrelationID, ctx.Value(key.CtxCorrelationID))
 		appendFilledFieldsOnly(&fields, key.Tool, ctx.Value(key.CtxTool))
 		appendFilledFieldsOnly(&fields, key.ProductFeature, ctx.Value(key.CtxProductFeature))
-		appendFilledFieldsOnly(&fields, key.ProductFeature, ctx.Value(key.CtxAPIVersion))
+		appendFilledFieldsOnly(&fields, key.APIVersion, ctx.Value(key.CtxAPIVersion))
+		appendFilledFieldsOnly(&fields, key.JobDetails, ctx.Value(key.CtxJobDetails))
 	}
 
 	return &Logger{
