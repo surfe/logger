@@ -1,6 +1,8 @@
 package zap
 
 import (
+	"context"
+	"errors"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -53,7 +55,12 @@ func (w *Logger) EchoMiddleware() echo.MiddlewareFunc {
 			n := res.Status
 			// Status 5XX is logged as error as this should not happen in production.
 			if n >= 500 {
-				log.Err(err).Error("CRM Error")
+				// Do not log the error when request canceled by the client
+				if errors.Is(err, context.Canceled) {
+					log.Err(err).Info("Request canceled")
+				} else {
+					log.Err(err).Error("Error")
+				}
 			} else {
 				log.Info("Incoming request")
 			}
