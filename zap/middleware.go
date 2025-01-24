@@ -53,17 +53,30 @@ func (w *Logger) EchoMiddleware() echo.MiddlewareFunc {
 
 			log := w.Ctx(c.Request().Context()).With(fields...)
 			n := res.Status
+
+			if err != nil {
+				log = log.Err(err)
+			}
+
+			// Do not log the error when request canceled by the client
+			if errors.Is(err, context.Canceled) {
+				log.Info("Request canceled")
+
+				return nil
+			}
+
 			// Status 5XX is logged as error as this should not happen in production.
 			if n >= 500 {
-				// Do not log the error when request canceled by the client
-				if errors.Is(err, context.Canceled) {
-					log.Err(err).Info("Request canceled")
-				} else {
-					log.Err(err).Error("Error")
-				}
-			} else {
-				log.Info("Incoming request")
+				log.Error("Error")
+
+				return nil
 			}
+			if n >= 400 {
+				log.Warn("Warn")
+
+				return nil
+			}
+			log.Info("Info")
 
 			return nil
 		}
