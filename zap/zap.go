@@ -1,6 +1,8 @@
 package zap
 
 import (
+	"reflect"
+
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
 )
@@ -18,6 +20,19 @@ func Init() (*Logger, error) {
 	return &Logger{sugarLog}, nil
 }
 
-func appendFilledFieldsOnly[T any](fields *[]any, key string, value T) {
+func appendFilledFieldsOnly(fields *[]any, key string, value any) {
+	if value == nil {
+		return
+	}
+
+	reflectedValue := reflect.ValueOf(value)
+	if reflectedValue.Kind() != reflect.Bool && reflectedValue.IsZero() {
+		return
+	}
+
+	if (reflectedValue.Kind() == reflect.Slice || reflectedValue.Kind() == reflect.Map) && reflectedValue.Len() == 0 {
+		return
+	}
+
 	*fields = append(*fields, key, value)
 }
