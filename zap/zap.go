@@ -15,7 +15,7 @@ func Init() (*Logger, error) {
 		return nil, errors.Wrap(err, "Build Zap Config")
 	}
 
-	sugarLog := zLogger.Sugar()
+	sugarLog := zLogger.WithOptions(zap.AddCallerSkip(1)).Sugar()
 
 	return &Logger{sugarLog}, nil
 }
