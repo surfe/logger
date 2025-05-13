@@ -42,6 +42,7 @@ func (w *Logger) EchoMiddleware() echo.MiddlewareFunc {
 			appendFilledFieldsOnly(&fields, key.Method, req.Method)
 			appendFilledFieldsOnly(&fields, key.URI, req.RequestURI)
 			appendFilledFieldsOnly(&fields, key.Path, req.URL.Path)
+			appendFilledFieldsOnly(&fields, key.Route, c.Path())
 			appendFilledFieldsOnly(&fields, key.Status, res.Status)
 			appendFilledFieldsOnly(&fields, key.UserAgent, req.UserAgent())
 			appendFilledFieldsOnly(&fields, key.APIVersion, req.Header.Get("API-Version"))
