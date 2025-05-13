@@ -8,6 +8,7 @@ const (
 	Method           = "method"
 	URI              = "uri"
 	Path             = "path"
+	Route            = "route"
 	External         = "external"
 	Status           = "status"
 	UserAgent        = "user_agent"
