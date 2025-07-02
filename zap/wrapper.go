@@ -6,6 +6,7 @@ import (
 	"github.com/surfe/logger/v2/key"
 	"github.com/surfe/logger/v2/logi"
 	"go.uber.org/zap"
+	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 )
 
 type Logger struct {
@@ -24,6 +25,10 @@ func (w *Logger) Ctx(ctx context.Context) logi.Logger {
 		appendFilledFieldsOnly(&fields, key.ProductFeature, ctx.Value(key.CtxProductFeature))
 		appendFilledFieldsOnly(&fields, key.APIVersion, ctx.Value(key.CtxAPIVersion))
 		appendFilledFieldsOnly(&fields, key.JobDetails, ctx.Value(key.CtxJobDetails))
+		if span, ok := tracer.SpanFromContext(ctx); ok {
+			appendFilledFieldsOnly(&fields, key.DataDogSpanID, span.Context().SpanID())
+			appendFilledFieldsOnly(&fields, key.DataDogTraceID, span.Context().TraceID())
+		}
 	}
 
 	return &Logger{
