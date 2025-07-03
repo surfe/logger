@@ -20,6 +20,8 @@ const (
 	Tool             = "tool"
 	ProductFeature   = "product_feature"
 	JobDetails       = "job_details"
+	DataDogTraceID   = "trace_id"
+	DataDogSpanID    = "span_id"
 
 	HeaderCorrelationID = "correlation-id"
 	HeaderEmail         = "email"
