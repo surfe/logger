@@ -3,6 +3,8 @@ package zap
 import (
 	"context"
 
+	"os"
+
 	"github.com/surfe/logger/v2/key"
 	"github.com/surfe/logger/v2/logi"
 	"go.uber.org/zap"
@@ -28,6 +30,9 @@ func (w *Logger) Ctx(ctx context.Context) logi.Logger {
 		if span, ok := tracer.SpanFromContext(ctx); ok {
 			appendFilledFieldsOnly(&fields, key.DataDogSpanID, span.Context().SpanID())
 			appendFilledFieldsOnly(&fields, key.DataDogTraceID, span.Context().TraceID())
+			appendFilledFieldsOnly(&fields, key.DataDogEnvironment, os.Getenv("ENV"))
+			appendFilledFieldsOnly(&fields, key.DatadogService, ctx.Value(key.CtxService))
+			appendFilledFieldsOnly(&fields, key.DataDogVersion, ctx.Value(key.CtxAPIVersion))
 		}
 	}
 

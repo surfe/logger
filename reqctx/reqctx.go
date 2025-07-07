@@ -9,7 +9,7 @@ import (
 	"github.com/surfe/logger/v2/key"
 )
 
-func ContextMiddleware(apiVersion string) echo.MiddlewareFunc {
+func ContextMiddleware(apiVersion, service string) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			var email string
@@ -38,6 +38,7 @@ func ContextMiddleware(apiVersion string) echo.MiddlewareFunc {
 			c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), key.CtxCompany, companyKey)))
 			c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), key.CtxCorrelationID, correlationID)))
 			c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), key.CtxAPIVersion, apiVersion)))
+			c.SetRequest(c.Request().WithContext(context.WithValue(c.Request().Context(), key.CtxService, service)))
 
 			c.Response().Header().Set(key.HeaderCorrelationID, correlationID)
 

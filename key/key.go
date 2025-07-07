@@ -20,8 +20,12 @@ const (
 	Tool             = "tool"
 	ProductFeature   = "product_feature"
 	JobDetails       = "job_details"
-	DataDogTraceID   = "trace_id"
-	DataDogSpanID    = "span_id"
+
+	DataDogTraceID     = "trace_id"
+	DataDogSpanID      = "span_id"
+	DataDogVersion     = "version"
+	DataDogEnvironment = "env"
+	DatadogService     = "service"
 
 	HeaderCorrelationID = "correlation-id"
 	HeaderEmail         = "email"
@@ -38,4 +42,5 @@ const (
 	CtxProductFeature
 	CtxAPIVersion
 	CtxJobDetails
+	CtxService
 )
