@@ -3,7 +3,7 @@ module github.com/surfe/logger/v2
 go 1.23.0
 
 require (
-	github.com/golang-jwt/jwt/v5 v5.2.1
+	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/labstack/gommon v0.4.2
 	github.com/pkg/errors v0.9.1
