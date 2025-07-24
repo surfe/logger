@@ -32,10 +32,10 @@ const (
 	HeaderCompanyKey    = "company-key"
 )
 
-type ctxKey int
+type LoggerCtxKey int
 
 const (
-	CtxEmail ctxKey = iota
+	CtxEmail LoggerCtxKey = iota
 	CtxCompany
 	CtxCorrelationID
 	CtxTool
